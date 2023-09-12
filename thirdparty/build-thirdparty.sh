@@ -839,6 +839,25 @@ build_cctz() {
     PREFIX=${TP_INSTALL_DIR} make install
 }
 
+#date
+build_date() {
+    check_if_source_exist $DATE_SOURCE
+    cd $TP_SOURCE_DIR/$DATE_SOURCE
+
+    rm -rf build
+    mkdir -p build
+    cd build
+    $CMAKE_CMD ../ -DBUILD_TZ_LIB=ON \
+            -DCMAKE_INSTALL_PREFIX=$TP_INSTALL_DIR \
+            -DCURL_LIBRARY=${TP_INSTALL_DIR}/lib/libcurl.a \
+            -DCURL_INCLUDE_DIR=${TP_INCLUDE_DIR}
+    ${BUILD_SYSTEM} -j$PARALLEL
+    ${BUILD_SYSTEM} install
+	
+    cp $TP_SOURCE_DIR/$DATE_SOURCE/build/libdate-tz.a $TP_INSTALL_DIR/lib
+    cp -r $TP_SOURCE_DIR/$DATE_SOURCE/include/date $TP_INCLUDE_DIR/
+}
+
 #fmt
 build_fmt() {
     check_if_source_exist $FMT_SOURCE
@@ -1258,6 +1277,7 @@ build_s2
 build_bitshuffle
 build_croaringbitmap
 build_cctz
+build_date
 build_fmt
 build_ryu
 build_hadoop

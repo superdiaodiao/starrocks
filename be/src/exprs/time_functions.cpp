@@ -17,6 +17,7 @@
 #include <algorithm>
 #include <string_view>
 #include <unordered_map>
+#include "date/tz.h"
 
 #include "column/column_helper.h"
 #include "column/column_viewer.h"
@@ -271,6 +272,18 @@ StatusOr<ColumnPtr> TimeFunctions::convert_tz(FunctionContext* context, const Co
     }
 
     return convert_tz_const(context, columns, ctc->from_tz, ctc->to_tz);
+}
+
+StatusOr<ColumnPtr> TimeFunctions::current_timezone(FunctionContext* context, const Columns& columns) {
+    starrocks::RuntimeState* state = context->state();
+    DateTimeValue dtv;
+    if (dtv.from_unixtime(state->timestamp_ms() / 1000, state->timezone())) {
+         using namespace date;
+         std::string tz_name = current_zone()->name();
+         return ColumnHelper::create_const_column<TYPE_VARCHAR>(tz_name, 1);
+    } else {
+         return ColumnHelper::create_const_null_column(1);
+    }
 }
 
 StatusOr<ColumnPtr> TimeFunctions::utc_timestamp(FunctionContext* context, const Columns& columns) {

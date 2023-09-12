@@ -276,6 +276,12 @@ CCTZ_NAME="cctz-2.3.tar.gz"
 CCTZ_SOURCE="cctz-2.3"
 CCTZ_MD5SUM="209348e50b24dbbdec6d961059c2fc92"
 
+# date
+DATE_DOWNLOAD="https://github.com/HowardHinnant/date/archive/v3.0.1.tar.gz"
+DATE_NAME="date-3.0.1.tar.gz"
+DATE_SOURCE="date-3.0.1"
+DATE_MD5SUM="78902f47f7931a3ae8a320e0dea1f20a"
+
 # FMT
 FMT_DOWNLOAD="https://github.com/fmtlib/fmt/releases/download/8.1.1/fmt-8.1.1.zip"
 FMT_NAME="fmt-8.1.1.zip"

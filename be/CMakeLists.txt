@@ -304,6 +304,12 @@ set_target_properties(roaring PROPERTIES IMPORTED_LOCATION ${THIRDPARTY_DIR}/lib
 add_library(cctz STATIC IMPORTED)
 set_target_properties(cctz PROPERTIES IMPORTED_LOCATION ${THIRDPARTY_DIR}/lib/libcctz.a)
 
+add_library(date-tz STATIC IMPORTED)
+set_target_properties(date-tz PROPERTIES
+    IMPORTED_LOCATION ${THIRDPARTY_DIR}/lib/libdate-tz.a
+    INTERFACE_INCLUDE_DIRECTORIES ${THIRDPARTY_DIR}/include
+)
+
 add_library(benchmark STATIC IMPORTED)
 set_target_properties(benchmark PROPERTIES IMPORTED_LOCATION ${THIRDPARTY_DIR}/lib64/libbenchmark.a)
 
@@ -839,6 +845,7 @@ set(STARROCKS_DEPENDENCIES
     parquet
     orc
     cctz
+    date-tz
     fmt
     ryu
     hyperscan

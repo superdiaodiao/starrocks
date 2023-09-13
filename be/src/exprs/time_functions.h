@@ -326,6 +326,8 @@ public:
 
     DEFINE_VECTORIZED_FN(current_timezone);
 
+    DEFINE_VECTORIZED_FN(cctz_current_timezone);
+
     DEFINE_VECTORIZED_FN(utc_timestamp);
 
     DEFINE_VECTORIZED_FN(utc_time);

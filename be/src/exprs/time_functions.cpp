@@ -286,6 +286,17 @@ StatusOr<ColumnPtr> TimeFunctions::current_timezone(FunctionContext* context, co
     }
 }
 
+StatusOr<ColumnPtr> TimeFunctions::cctz_current_timezone(FunctionContext* context, const Columns& columns) {
+    starrocks::RuntimeState* state = context->state();
+    DateTimeValue dtv;
+    if (dtv.from_unixtime(state->timestamp_ms() / 1000, state->timezone())) {
+         std::string tz_name = TimezoneUtils::local_time_zone().name();
+         return ColumnHelper::create_const_column<TYPE_VARCHAR>(tz_name, 1);
+    } else {
+         return ColumnHelper::create_const_null_column(1);
+    }
+}
+
 StatusOr<ColumnPtr> TimeFunctions::utc_timestamp(FunctionContext* context, const Columns& columns) {
     starrocks::RuntimeState* state = context->state();
     DateTimeValue dtv;
